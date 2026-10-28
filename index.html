@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Just for Shuchi ♡</title>
+<style>
+:root{--pink:#ff719f;--hot:#f84e88;--ink:#60334c;--muted:#956e83;--paper:#fffaf9;--line:#ffe0e9}
+*{box-sizing:border-box}
+html,body{margin:0;min-height:100%;font-family:Inter,ui-rounded,"Trebuchet MS",system-ui,sans-serif;color:var(--ink)}
+body{background:linear-gradient(135deg,#fff7f8,#fff0f4 55%,#fff6ed);overflow-x:hidden}
+button{font:inherit;cursor:pointer;border:0}
+.app{min-height:100vh;display:grid;place-items:center;padding:22px;position:relative;isolation:isolate;overflow:hidden}
+.glow{position:fixed;width:350px;height:350px;border-radius:50%;filter:blur(75px);opacity:.45;z-index:-1;pointer-events:none}
+.glow.one{background:#ffc5d8;top:-130px;left:-120px}.glow.two{background:#ffe0c5;right:-130px;bottom:-150px}
+.petal{position:fixed;top:-40px;z-index:0;pointer-events:none;opacity:.6;animation:fall linear forwards}
+@keyframes fall{to{transform:translateY(110vh) rotate(300deg);opacity:.05}}
+.panel{width:min(640px,100%);background:#ffffffc9;border:1px solid #fff;box-shadow:0 28px 90px #bd5b7b1d;border-radius:34px;padding:clamp(24px,6vw,52px);text-align:center;backdrop-filter:blur(18px);position:relative;z-index:1;animation:enter .55s cubic-bezier(.2,.8,.2,1)}
+@keyframes enter{from{opacity:0;transform:translateY(14px) scale(.985)}to{opacity:1;transform:translateY(0) scale(1)}}
+.eyebrow{display:inline-flex;align-items:center;gap:7px;background:#ffebf1;border:1px solid #ffe0e9;border-radius:99px;padding:9px 14px;font-size:11px;letter-spacing:.14em;font-weight:800;color:#b34b72}
+.emoji{font-size:clamp(52px,10vw,76px);line-height:1.25;margin:12px 0 10px;display:block;filter:drop-shadow(0 10px 14px #ff719f22)}
+h1{font-size:clamp(38px,8vw,64px);line-height:1.02;letter-spacing:-.065em;margin:15px 0;color:#583149}
+h1 span{color:var(--hot)}
+h2{font-size:clamp(28px,6vw,42px);line-height:1.08;letter-spacing:-.045em;margin:15px 0}
+p{font-size:clamp(15px,2.8vw,17px);line-height:1.8;color:var(--muted);margin:12px auto;max-width:490px}
+.small{font-size:13px;line-height:1.7}
+.actions{display:flex;justify-content:center;gap:11px;flex-wrap:wrap;margin-top:28px}
+.btn{padding:15px 23px;border-radius:99px;font-size:14px;font-weight:800;transition:transform .18s,box-shadow .18s}
+.btn:hover{transform:translateY(-2px);box-shadow:0 12px 26px #d9588126}
+.primary{color:white;background:linear-gradient(135deg,#ff82aa,#f84e88);box-shadow:0 8px 20px #f84e8828}
+.soft{color:#a34068;background:#fff0f5;border:1px solid #ffd8e5}
+.progress{display:flex;justify-content:center;gap:6px;margin:0 0 24px}
+.dot{width:7px;height:7px;border-radius:99px;background:#f3d2de;transition:all .25s}
+.dot.active{width:23px;background:#f45c91}
+.envelope-wrap{height:145px;display:grid;place-items:center;margin:8px auto 4px}
+.envelope{font-size:100px;cursor:pointer;animation:bob 2s ease-in-out infinite;filter:drop-shadow(0 12px 10px #d75a7d20)}
+@keyframes bob{50%{transform:translateY(-8px) rotate(-3deg)}}
+.letter{background:#fff7fa;border:1px solid #ffe0e9;border-radius:22px;padding:22px;text-align:left;margin-top:20px}
+.letter p{font-size:15px;margin:8px 0;color:#79546a}
+.memory-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:9px;margin:22px 0}
+.memory{background:#fff5f8;border:1px solid #ffe0e9;border-radius:17px;padding:14px 7px;font-size:12px;color:#95627a;line-height:1.45}
+.memory strong{display:block;font-size:25px;margin-bottom:7px}
+.gamebox{background:#fff6f9;border:1px solid #ffe1eb;border-radius:22px;padding:20px;margin-top:18px}
+.cat{font-size:56px;display:block;margin-bottom:8px}
+.choices{display:flex;justify-content:center;gap:10px;flex-wrap:wrap;margin-top:17px}
+#response{min-height:30px;font-weight:700;color:#b24370;margin-top:15px;line-height:1.6}
+.heart-big{font-size:90px;display:block;animation:heart 1.1s infinite}
+@keyframes heart{0%,100%{transform:scale(1)}15%{transform:scale(1.13)}30%{transform:scale(1)}}
+.footer{margin-top:22px;color:#bd8aa0;font-size:11px;letter-spacing:.06em}
+.back{background:none;color:#b47c94;font-size:12px;margin-top:19px;padding:8px}
+.hidden{display:none!important}
+@media(max-width:440px){.panel{border-radius:27px}.memory-grid{grid-template-columns:1fr}.memory{display:flex;align-items:center;gap:12px;text-align:left;padding:12px}.memory strong{margin:0}.btn{width:100%}.actions{gap:9px}}
+@media(prefers-reduced-motion:reduce){*,*::before,*::after{animation-duration:.01ms!important;animation-iteration-count:1!important;scroll-behavior:auto!important}}
+</style>
+</head>
+<body>
+<div class="glow one"></div><div class="glow two"></div>
+<div class="app">
+  <main class="panel" id="panel" aria-live="polite">
+    <div class="progress" id="progress" aria-label="Your little journey">
+      <span class="dot active"></span><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="dot"></span>
+    </div>
+    <section class="screen" data-screen="0">
+      <div class="eyebrow">A LITTLE SOMETHING FOR YOU ✦</div>
+      <span class="emoji">🌷</span>
+      <h1>Hey, <span>Shuchi</span> ♡</h1>
+      <p>I made something just for you. It’s small, it’s full of love, and it comes straight from my heart.</p>
+      <p class="small">Ready for a tiny little journey?</p>
+      <div class="actions"><button class="btn primary" onclick="go(1)">Tap to open your surprise ♡</button></div>
+    </section>
+
+    <section class="screen hidden" data-screen="1">
+      <div class="eyebrow">STEP 1 · A LETTER FOR YOU</div>
+      <div class="envelope-wrap"><div class="envelope" onclick="revealLetter()" aria-label="Open envelope" role="button">💌</div></div>
+      <h2>A little letter,<br>just for you.</h2>
+      <p>There are some things I want to say properly, not just in a quick text.</p>
+      <div class="actions"><button class="btn primary" onclick="revealLetter()">Open the letter 💗</button></div>
+      <div class="letter hidden" id="letter">
+        <p><strong>My Shuchi,</strong></p>
+        <p>I’m sorry for hurting you. I don’t want to dismiss your feelings or expect everything to be okay just because I said sorry. You deserve to be heard, understood, and cared for.</p>
+        <p>I love you so much, and I want to show that love through patience, honesty, and the way I treat you—not just through words. I want to understand what hurt you and do better.</p>
+        <p>You don’t have to forgive me before you’re ready. I just want you to know that this apology is real, my love for you is real, and I’m here when you feel ready to talk. ❤️</p>
+        <p style="text-align:right"><strong>With all my love ♡</strong></p>
+      </div>
+      <div class="actions"><button class="btn primary" onclick="go(2)">Keep going →</button></div>
+    </section>
+
+    <section class="screen hidden" data-screen="2">
+      <div class="eyebrow">STEP 2 · THE LITTLE THINGS</div>
+      <span class="emoji">✨</span>
+      <h2>Why you’re so<br><span style="color:var(--hot)">special to me</span></h2>
+      <p>It’s not just one big thing. It’s all the little things that make you, you.</p>
+      <div class="memory-grid">
+        <div class="memory"><strong>🌻</strong>Your smile makes an ordinary day feel brighter.</div>
+        <div class="memory"><strong>🫶</strong>Your feelings matter to me, even when I don’t get everything right.</div>
+        <div class="memory"><strong>🌙</strong>You’re someone I want to keep learning, growing, and making memories with.</div>
+      </div>
+      <p class="small">And I hope I keep giving you reasons to feel loved, safe, and appreciated.</p>
+      <div class="actions"><button class="btn primary" onclick="go(3)">There's one more thing… →</button></div>
+    </section>
+
+    <section class="screen hidden" data-screen="3">
+      <div class="eyebrow">STEP 3 · A TINY GAME</div>
+      <span class="emoji">🐻</span>
+      <h2>Can this little bear<br>ask you something?</h2>
+      <div class="gamebox">
+        <span class="cat" id="bear">🐻‍❄️</span>
+        <p style="margin-top:0;color:#80556c">He’s carrying a very important message from someone who loves you a lot…</p>
+        <h2 style="font-size:25px;margin:14px 0">Will you let us talk when you feel ready?</h2>
+        <p class="small">No pressure, no rush. Your feelings come first. 🤍</p>
+        <div class="choices">
+          <button class="btn primary" onclick="choose('yes')">Okay, we can talk 💗</button>
+          <button class="btn soft" onclick="choose('time')">I need a little time 🌷</button>
+        </div>
+        <div id="response" aria-live="polite"></div>
+      </div>
+      <div class="actions"><button class="btn primary" onclick="go(4)">One last surprise →</button></div>
+    </section>
+
+    <section class="screen hidden" data-screen="4">
+      <div class="eyebrow">JUST BETWEEN US ♡</div>
+      <span class="heart-big">💖</span>
+      <h1 style="font-size:clamp(38px,8vw,58px)">I love you,<br><span>Shuchi.</span></h1>
+      <p>More than a page can say. I can’t promise I’ll never make mistakes, but I can promise to keep listening, learning, and trying to love you better.</p>
+      <p>You matter to me. Your happiness matters to me. And whenever you’re ready, I’d love the chance to make things right—one little step at a time. 🫶</p>
+      <div class="actions"><button class="btn primary" onclick="sprinkle()">Send a little more love ✨</button><button class="btn soft" onclick="go(0)">Replay our little journey ↻</button></div>
+      <div id="finalNote" class="small" style="margin-top:14px;color:#b24370"></div>
+    </section>
+    <div class="footer">MADE WITH LOVE, JUST FOR SHUCHI ♡</div>
+  </main>
+</div>
+<script>
+let current=0;
+function go(n){
+ current=n;
+ document.querySelectorAll('.screen').forEach(s=>s.classList.toggle('hidden',Number(s.dataset.screen)!==n));
+ document.querySelectorAll('.dot').forEach((d,i)=>d.classList.toggle('active',i===Math.min(n,4)));
+ const p=document.getElementById('panel');p.style.animation='none';void p.offsetWidth;p.style.animation='enter .55s cubic-bezier(.2,.8,.2,1)';
+ window.scrollTo({top:0,behavior:'smooth'});
+}
+function revealLetter(){document.getElementById('letter').classList.remove('hidden');document.querySelector('.envelope').textContent='💝';}
+function choose(answer){
+ const r=document.getElementById('response');
+ if(answer==='yes'){document.getElementById('bear').textContent='🥹💗';r.textContent='Thank you for being open to it. I’ll listen with an open heart. No pressure—just us talking when you’re ready.';}
+ else{document.getElementById('bear').textContent='🧸🌷';r.textContent='Of course. Take all the time you need. You don’t owe an instant answer, and I’ll respect your space. Sending you a gentle hug.';}
+}
+function petal(){
+ const e=document.createElement('div');e.className='petal';e.textContent=['♡','💗','🌸','✨','💕'][Math.floor(Math.random()*5)];
+ e.style.left=Math.random()*100+'vw';e.style.fontSize=(14+Math.random()*20)+'px';e.style.animationDuration=(7+Math.random()*7)+'s';
+ document.body.appendChild(e);setTimeout(()=>e.remove(),15000);
+}
+setInterval(petal,850);
+function sprinkle(){
+ for(let i=0;i<24;i++)setTimeout(petal,i*70);
+ document.getElementById('finalNote').textContent='A little shower of love, just for you. You are so, so special. 💗';
+}
+</script>
+</body>
+</html>
